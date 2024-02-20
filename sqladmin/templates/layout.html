@@ -1,36 +1,33 @@
 {% extends "base.html" %}
 {% from '_macros.html' import display_menu %}
 {% block body %}
-<div class="wrapper">
-  <aside class="navbar navbar-expand-lg navbar-vertical navbar-expand-md navbar-dark">
+<aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark">
     <div class="container-fluid">
-      <h1 class="navbar-brand navbar-brand-autodark">
-        <a href="{{ url_for('admin:index') }}">
-          {% if admin.logo_url %}
-          <img src="{{ admin.logo_url }}" width="64" height="64" alt="Admin" class="navbar-brand-image" />
-          {% else %}
-          <h3>{{ admin.title }}</h3>
-          {% endif %}
-        </a>
-      </h1>
-      <nav class="navbar navbar-expand-sm" id="navbar-menu">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <h1 class="navbar-brand navbar-brand-autodark">
+            <a href="{{ url_for('admin:index') }}" class="navbar-brand-image">
+                {{ admin.title.upper() }}
+            </a>
+            <a href="?theme=dark" class="navbar-brand-image px-0 hide-theme-dark" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                <i class="fa-solid fa-moon"></i>
+            </a>
+            <a href="?theme=light" class="navbar-brand-image px-0 hide-theme-light" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable light mode" data-bs-original-title="Enable light mode">
+                <i class="fa-solid fa-sun"></i>
+            </a>
+            {% if admin.authentication_backend %}
+                <a href="{{ request.url_for('admin:logout') }}" class="navbar-brand-image">
+                    <i class="fa-solid fa-sign-out"></i>
+                </a>
+            {% endif %}
+          </h1>
+        <div class="collapse navbar-collapse" id="sidebar-menu">
           {{ display_menu(admin._menu, request) }}
         </div>
-      </nav>
-      {% if admin.authentication_backend %}
-      <a href="{{ request.url_for('admin:logout') }}" class="btn btn-secondary btn-icon">
-        <i class="fa fa-sign-out"></i>
-        <span>Logout</span>
-      </a>
-      {% endif %}
     </div>
-  </aside>
-  <div class="page-wrapper">
+    </aside>
+    <div class="page-wrapper">
     <div class="container-fluid">
       <div class="page-header d-print-none">
         {% block content_header %}
@@ -50,6 +47,5 @@
         </div>
       </div>
     </div>
-  </div>
 </div>
 {% endblock %}
