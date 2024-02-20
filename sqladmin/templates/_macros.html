@@ -41,7 +41,7 @@
 {% endmacro %}
 
 {% macro display_menu(menu, request) %}
-<div class="navbar-nav">
+<ul class="navbar-nav pt-lg-3">
   {% for item in menu.items %}
   {% if item.type_ == "View" %}
   {{ menu_item(item, request) }}
@@ -49,5 +49,5 @@
   {{ menu_category(item, request) }}
   {% endif %}
   {% endfor %}
-</div>
+</ul>
 {% endmacro %}
